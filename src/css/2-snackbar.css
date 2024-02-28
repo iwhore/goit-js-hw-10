@@ -1,0 +1,25 @@
+*{
+    font-family: sans-serif;
+}
+
+form{
+    margin-top: 20px;
+}
+
+fieldset {
+    width: 230px;
+}
+
+button {
+    margin-top: 10px;
+    width: 260px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.delay-input {
+    width: 250px;
+}

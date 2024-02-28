@@ -1,0 +1,28 @@
+*{
+    font-family: sans-serif;
+}
+
+section {
+    margin-top: 20px;
+}
+
+.timer{
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+
+.field .value{
+  font-size: 25px;
+  font-weight: 600;
+}
