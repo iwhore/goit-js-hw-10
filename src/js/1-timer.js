@@ -4,50 +4,44 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-  const showDays = document.querySelector('[data-days]');
-  const showHours = document.querySelector('[data-hours]');
-  const showMinutes = document.querySelector('[data-minutes]');
-  const showSeconds = document.querySelector('[data-seconds]');
-  const inputfield = document.querySelector('#datetime-picker');
-  const startBtn = document.querySelector('[data-start]');
+const showDays = document.querySelector('[data-days]');
+const showHours = document.querySelector('[data-hours]');
+const showMinutes = document.querySelector('[data-minutes]');
+const showSeconds = document.querySelector('[data-seconds]');
+const inputfield = document.querySelector('#datetime-picker');
+const startBtn = document.querySelector('[data-start]');
 
 startBtn.addEventListener('click', () => {
-  startBtn.disabled = true;
-  inputfield.disabled = true;
-  startTimer();
+  const selectedDate = new Date(inputfield.value).getTime();
+  const currentDate = new Date().getTime();
+  
+  if (selectedDate > currentDate) {
+    startBtn.disabled = true;
+    inputfield.disabled = true;
+    startTimer(selectedDate);
+  } else {
+    iziToast.error({
+      fontSize: 'large',
+      close: false,
+      position: 'topRight',
+      messageColor: 'white',
+      timeout: 2000,
+      backgroundColor: 'red',
+      message: ("Please choose a date in the future")
+    });
+  }
 });
 
 const options = {
-    defaultDate: null,
-    enableTime: true,
-    time_24hr: true,
-    defaultDate: new Date(),
-    minuteIncrement: 1,
-          
-    onClose(selectedDates) {
-      const userDate = new Date(selectedDates[0]).getTime();
-      const startDate = Date.now();
-                
-      if (userDate >= startDate) {
-        startBtn.disabled = false;
-        timeDifference = userDate - startDate;
-        updateClockface(convertMs(timeDifference));
-               
-      } else {
-        iziToast.error({
-          fontSize: 'large',
-          close: false,
-          position: 'topRight',
-          messageColor: 'white',
-          timeout: 2000,
-          backgroundColor: 'red',
-          message: ("Please choose a date in the future")
-        });
-      }
-    }
-};   
+  defaultDate: null,
+  enableTime: true,
+  time_24hr: true,
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    // No need to check for future date here since it's handled in the startBtn click event
+  }
+};
 
-startBtn.disabled = true;
 let timeDifference; 
 let intervalId;        
 
@@ -60,24 +54,24 @@ function updateClockface({ days, hours, minutes, seconds }) {
   showSeconds.textContent = `${seconds}`;
 }
 
-function startTimer() {
+function startTimer(selectedDate) {
   clearInterval(intervalId);
+  timeDifference = selectedDate - Date.now();
   intervalId = setInterval(timer, 1000);
 }
 
 function timer() {
-
   if (timeDifference > 1000) {
     timeDifference -= 1000;
     updateClockface(convertMs(timeDifference))
   } else {
-     clearInterval(intervalId);
-     inputfield.disabled = false;
+    clearInterval(intervalId);
+    inputfield.disabled = false;
   }
 }
- 
+
 function addLeadingZero(value){
-    return String(value).padStart(2, "0");
+  return String(value).padStart(2, "0");
 }
 
 function convertMs(time) {
