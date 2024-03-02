@@ -4,12 +4,21 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
+import iconError from '../img/icon-error.png';
+
 const showDays = document.querySelector('[data-days]');
 const showHours = document.querySelector('[data-hours]');
 const showMinutes = document.querySelector('[data-minutes]');
 const showSeconds = document.querySelector('[data-seconds]');
 const inputfield = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('[data-start]');
+
+// Перевірка на майбутню дату під час ініціалізації сторінки
+const currentDate = new Date().getTime();
+const selectedDate = new Date(inputfield.value).getTime();
+if (selectedDate <= currentDate) {
+  startBtn.disabled = true;
+}
 
 startBtn.addEventListener('click', () => {
   const selectedDate = new Date(inputfield.value).getTime();
@@ -21,24 +30,40 @@ startBtn.addEventListener('click', () => {
     startTimer(selectedDate);
   } else {
     iziToast.error({
-      fontSize: 'large',
-      close: false,
-      position: 'topRight',
-      messageColor: 'white',
-      timeout: 2000,
-      backgroundColor: 'red',
-      message: ("Please choose a date in the future")
+      iconUrl: iconError,
+      message: 'Please choose a date in the future',
+      position: 'topCenter',
+      backgroundColor: '#ef4040',
+      titleColor: '#FFFFFF',
+      messageColor: '#FFFFFF',
+      theme: 'dark',
     });
   }
 });
 
 const options = {
-  defaultDate: null,
+  defaultDate: new Date(),
   enableTime: true,
   time_24hr: true,
   minuteIncrement: 1,
   onClose(selectedDates) {
-    // No need to check for future date here since it's handled in the startBtn click event
+    const selectedDate = new Date(selectedDates[0]).getTime();
+    const currentDate = new Date().getTime();
+
+    if (selectedDate <= currentDate) {
+      startBtn.disabled = true;
+      iziToast.error({
+        iconUrl: iconError,
+          message: 'Please choose a date in the future',
+          position: 'topCenter',
+          backgroundColor: '#ef4040',
+          titleColor: '#FFFFFF',
+          messageColor: '#FFFFFF',
+          theme: 'dark',
+      });
+    } else {
+      startBtn.disabled = false;
+    }
   }
 };
 

@@ -1,6 +1,8 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
+import iconOk from '../img/icon-ok.png';
+import iconError from '../img/icon-error.png';
 
 const form = document.querySelector('.form');
 
@@ -32,17 +34,24 @@ form.addEventListener('submit', function(event) {
   
   promise.then(delay => {
     iziToast.success({
-        message: `✅ Fulfilled promise in ${delay}ms`,
-        backgroundColor: 'light-green',
-        position: 'topRight',
-        messageColor: 'white'
+      title: 'OK',
+      iconUrl: iconOk,
+      message: `Fulfilled promise in ${delay}ms`,
+      position: 'topRight',
+      backgroundColor: '#59a10d',
+      titleColor: '#FFFFFF',
+      messageColor: '#FFFFFF',
+      theme: 'dark',
     });
   }).catch(delay => {
     iziToast.error({
-        message: `❌ Rejected promise in ${delay}ms`,
-        backgroundColor: 'red',
-        position: 'topRight',
-        messageColor: 'white'
+      iconUrl: iconError,
+      message: `Rejected promise in ${delay}ms`,
+      position: 'topRight',
+      backgroundColor: '#ef4040',
+      titleColor: '#FFFFFF',
+      messageColor: '#FFFFFF',
+      theme: 'dark',
     });
   });
 });
