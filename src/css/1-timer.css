@@ -64,16 +64,17 @@ button {
     border-radius: 8px;
     background: #989898;
 }
+
 [data-start] {
     background-color: #4e75ff;
     color: white;
     border: none;
-  }
+}
   
-  [data-start]:hover {
+[data-start]:hover {
     background-color: #6c8cff;
-  }
-  
-  [data-start]:disabled {
+}
+
+[data-start]:disabled {
     background-color: #989898;
-  }
+}

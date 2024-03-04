@@ -32,7 +32,7 @@ startBtn.addEventListener('click', () => {
     iziToast.error({
       iconUrl: iconError,
       message: 'Please choose a date in the future',
-      position: 'topCenter',
+      position: 'topRight',
       backgroundColor: '#ef4040',
       titleColor: '#FFFFFF',
       messageColor: '#FFFFFF',
@@ -55,7 +55,7 @@ const options = {
       iziToast.error({
         iconUrl: iconError,
           message: 'Please choose a date in the future',
-          position: 'topCenter',
+          position: 'topRight',
           backgroundColor: '#ef4040',
           titleColor: '#FFFFFF',
           messageColor: '#FFFFFF',
